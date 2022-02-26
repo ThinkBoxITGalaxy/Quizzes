@@ -1,24 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Quizzes.Context;
-using Quizzes.DataAccessObject;
+using Quizzes.APIcommunicate;
 using Quizzes.Models;
 using System.Diagnostics;
+using System.Web.Script.Serialization;
+using QuizLibrary;
 
 namespace Quizzes.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly DAO dao;
-
-        public HomeController(Cont c)
-        {
-            dao = new DAO(c);
-        }
 
         public IActionResult Index()
         {
             //return View();
-            return RedirectToAction("GetTeacher");
+            return RedirectToAction("Load");
         }
 
         [HttpPost("action"), Route("Login")]
@@ -36,32 +31,76 @@ namespace Quizzes.Controllers
         {
             return View();
         }
+        [HttpPost("action"), Route("/Subjects")]
+        public IActionResult Subjects()
+        {
+            return View();
+        }
 
         //=============================================
-        [HttpPost("action"), Route("/GetTeacher")]
-        public IActionResult GetTeacher()
+
+        [HttpPost("action"), Route("/Load")]
+        public IActionResult Load()
         {
-            var TeacherData = dao.GetTeachers();
-            return View("Begin", TeacherData);
+            try
+            {
+                JavaScriptSerializer seria = new JavaScriptSerializer();
+                List<TeachersModel> pl = seria.Deserialize<List<TeachersModel>>(new WebCaller().WebCall("/api/GetTest"));
+                if (pl == null)
+                {
+                    return View("Error");
+                }
+                else
+                return View("Begin", pl);
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
-        [HttpPost("action"), Route("/Studies")]
-        public IActionResult Studies()
+        [HttpPost("action"), Route("GetStudies")]
+        public IActionResult GetStudies()
         {
-            var StudiesData = new Tuple<List<Studies>>(dao.GetStudies());
-            return View("Quiz", StudiesData);
+            JavaScriptSerializer ser = new JavaScriptSerializer();
+            List<Studies> st = ser.Deserialize<List<Studies>>(new WebCaller().WebCall("/api/GetStudies"));
+
+             
+            if (st == null)
+            {
+                return View("Error");
+            }
+            else
+                return View("Quiz", st);
+
         }
-        [HttpPost("action"), Route("/Subjects")]
-        public IActionResult Subjects([FromForm] SubjectView sv)
+        [HttpPost("action"), Route("GetSubjects")]
+        public IActionResult GetSubjects([FromForm] SubjectView sv)
         {
-            var SubjectViewData = dao.GetSubjectViews(sv.sname);
-            return View(SubjectViewData);
+            string st = new WebCaller().Getdata("/api/GetSubjects", new JavaScriptSerializer().Serialize(sv));
+            List<SubjectView> pa = new JavaScriptSerializer().Deserialize<List<SubjectView>>(st);
+
+            return View("Subjects", pa);
         }
+
+        //[HttpPost("action"), Route("/GetTeacher")]
+        //public IActionResult GetTeacher()
+        //{
+        //    var TeacherData = dao.GetTeachers();
+        //    return View("Begin", TeacherData);
+        //}
+        //[HttpPost("action"), Route("/Studies")]
+        //public IActionResult Studies()
+        //{
+        //    var StudiesData = new Tuple<List<Studies>>(dao.GetStudies());
+        //    return View("Quiz", StudiesData);
+        //}
+      
         [HttpPost("action"), Route("/Questions")]
         public IActionResult Questions()
         {
             return View();
         }
-        
+
         //=============================================
         public IActionResult Privacy()
         {

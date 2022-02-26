@@ -1,4 +1,6 @@
-﻿@model Tuple<List<Studies>>
+﻿@using QuizLibrary
+@model List<Studies>
+
 <section id="groups">
     <div class="row match-height">
         <div class="col-12 mt-3 mb-1">
@@ -11,7 +13,7 @@
 
         Queue<Studies> stud = new Queue<Studies>();
 
-        foreach (Studies st in Model.Item1)
+        foreach (Studies st in Model)
         {
             stud.Enqueue(st);
         }
@@ -20,7 +22,7 @@
 
         for (int i = 0; i < studCount; i++)
         {
-            <form asp-controller="Home" asp-action="Subjects">
+            <form asp-controller="Home" asp-action="GetSubjects">
                 <div class="row match-height">
                     <div class="col-12">
                         <div class="card-group">
