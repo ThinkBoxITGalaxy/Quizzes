@@ -1,0 +1,111 @@
+﻿@using QuizLibrary;
+@model List<TeachersModel>
+
+
+<form asp-controller="Home" asp-action="CreateTeacher">
+    <div class="row">
+        <div class="col-lg-8 highlight">
+            <div class="table-responsive">
+                <table class="table table-hover table-outline table-vcenter text-nowrap">
+                    <thead>
+                        <tr>
+                            <th class="text-center w-1"><i class="icon-people"></i></th>
+                            <th>User</th>
+                            <th>Usage</th>
+                            <th class="text-center">Payment</th>
+                            @*<th>Activity</th>*@
+                           @* <th class="text-center">Satisfaction</th>
+                            <th class="text-center"><i class="icon-settings"></i></th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (TeachersModel tm in Model)
+                            {
+                                <tr>
+                                    <td class="text-center">
+                                        <div class="avatar d-block" style="background-image: url(demo/faces/female/26.jpg)">
+                                            <span class="avatar-status bg-green"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div>@tm.fname</div>
+                                        <div class="small text-muted">
+                                            Registered: Mar 9, 2018
+                                        </div>
+                                    </td>
+                                      <td>
+                                        <div>@tm.lname</div>
+                                        <div class="small text-muted">
+                                            Registered: Mar 9, 2018
+                                        </div>
+                                    </td>
+                                  
+                                    <td class="text-center">
+                                        <div class="item-action dropdown">
+                                            <a href="javascript:void(0)" data-toggle="dropdown" class="icon"><i class="fe fe-more-vertical"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-tag"></i> Action </a>
+                                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-edit-2"></i> Another action </a>
+                                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-message-square"></i> Something else here</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a href="javascript:void(0)" class="dropdown-item"><i class="dropdown-icon fe fe-link"></i> Separated link</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Teacher's Form</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="form-label">ID</label>
+                        <input type="text" name="id" class="form-control" placeholder="Identification" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input type="text" name="fname" class="form-control" placeholder="First Name" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Middle Name</label>
+                        <input type="text" name="mname" class="form-control" placeholder="Middle Name" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input type="text" name="lname" class="form-control" placeholder="Last Name" />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea name="descrip" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Position</label>
+                        <input type="text" name="position" class="form-control" placeholder="Position" />
+                    </div>
+                    <img class="card-img-top" src="./demo/photos/david-klaasen-54203-500.jpg" alt="">
+                     <div class="form-group">
+                        <input type="file"/>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary btn-block" value="Proceed" />
+                    </div>
+                    
+                </div>
+            </div>
+            <script>
+                require(['input-mask']);
+            </script>
+        </div>
+
+    </div>
+</form>

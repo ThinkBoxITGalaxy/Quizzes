@@ -23,6 +23,7 @@ namespace Quizzes.APIcommunicate
             string som =  resp.Content.ReadAsStringAsync().Result;
             return som;
         }
+        //query specific data
         public string Getdata(string apiPath, string data)
         {
 
@@ -46,6 +47,16 @@ namespace Quizzes.APIcommunicate
             }
 
             return s;
+        }
+        public void InsertData(string apiPath, string data)
+        {
+            try
+            {
+                var resp = base.PostAsync(apiPath, new StringContent(data, Encoding.UTF8, "application/json")).Result;
+            }
+            catch(Exception ex) {
+                throw ex;
+            }
         }
     }
 }

@@ -221,7 +221,7 @@ svg:not(:root) {
 }
 
 table {
-  border-collapse: collapse;
+    border-collapse: collapse;
 }
 
 caption {
@@ -9465,6 +9465,7 @@ a.text-dark:hover, a.text-dark:focus {
   thead {
     display: table-header-group;
   }
+  
   tr,
   img {
     page-break-inside: avoid;
